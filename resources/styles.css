@@ -1,0 +1,21 @@
+.background {
+  viewport-fill: black;
+}
+
+#currentTime {
+  font-size: 80;
+  font-family: Fabrikat-Black;
+  text-length: 32;
+  text-anchor: middle;
+  x: 50%;
+  y: 30%;
+  fill: white;
+}
+
+#heartRate {
+  font-size: 50;
+  font-family: Fabrikat-Black;
+  fill: white;
+  x: 50%;
+  y: 80%;
+}
