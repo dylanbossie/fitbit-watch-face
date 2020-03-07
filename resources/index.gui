@@ -1,4 +1,4 @@
-<svg class="background">
-  <text id="currentTime" />
-  <text id="heartRate" />
+<svg id="background">
+  <text class="contentText" id="currentTime" />
+  <text class="contentText" id="heartRate" />
 </svg>
