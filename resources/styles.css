@@ -31,16 +31,10 @@
 }
 
 #heartRate {
-  text-length: 3;
+  text-length: 6;
   text-anchor: start;
   x: 2%;
   y: 95%;
-}
-
-#heart {
-  text-length: 1;
-  x: 20%;
-  y: 93%;
 }
 
 #batteryLevel {

@@ -93,9 +93,8 @@ battery.onchange = () => {
 if (HeartRateSensor) {
    const hrm = new HeartRateSensor();
    hrm.addEventListener("reading", () => {
-     console.log(`Current heart rate: ${hrm.heartRate}`);
      let heart = hrm.heartRate;
-     heartRate.text = `${heart}`;
+     heartRate.text = `${heart}♥`;
    });
    hrm.start();
 }
@@ -113,6 +112,5 @@ messaging.peerSocket.onmessage = (evt,today) => {
   }
 };
 
-console.log("The charger " + (charger.connected ? "is" : "is not ") + " connected");
 console.log(`${today.adjusted.steps} steps today`);
 
