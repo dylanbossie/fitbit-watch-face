@@ -8,16 +8,28 @@ import { today } from 'user-activity';
 import * as messaging from "messaging";
 
 // Update the clock every minute
-clock.granularity = "minutes";
+clock.granularity = "seconds";
 
 const currentTime = document.getElementById("currentTime");
 const heartRate = document.getElementById("heartRate");
 const background = document.getElementById("background");
 const textItems = document.getElementsByClassName("contentText");
+const currentDate = document.getElementById("currentDate");
+const currentDayOfWeek = document.getElementById("currentDayOfWeek");
+const batteryLevel = document.getElementById("batteryLevel");
+
+let dayOfWeekMap = new Map;
+dayOfWeekMap.set(0, "Sun");
+dayOfWeekMap.set(1, "Mon");
+dayOfWeekMap.set(2, "Tue");
+dayOfWeekMap.set(3, "Wed");
+dayOfWeekMap.set(4, "Thu");
+dayOfWeekMap.set(5, "Fri");
+dayOfWeekMap.set(6, "Sat");
 
 // Update the <text> element every tick with the current time
 clock.ontick = (evt) => {
-  // Get date and time information
+  // Get day and time information from tickEvent
   let today = evt.date;
   let dayOfWeek = today.getDay();
   let day = today.getDate();
@@ -34,8 +46,16 @@ clock.ontick = (evt) => {
   }
   let mins = util.zeroPad(today.getMinutes());
   currentTime.text = `${hours}:${mins}`;
+
+  // Format date information and display
+  currentDate.text = `${month+1}/${day}`;
+  currentDayOfWeek.text = `${dayOfWeekMap.get(dayOfWeek)}`;
+
+  // Format battery information and display
+  batteryLevel.text = `${battery.chargeLevel}%`;
 }
 
+// Get heart rate sensor information and display
 if (HeartRateSensor) {
    const hrm = new HeartRateSensor();
    hrm.addEventListener("reading", () => {
