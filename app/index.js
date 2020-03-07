@@ -5,12 +5,15 @@ import * as util from "../common/utils";
 import { HeartRateSensor } from "heart-rate";
 import { battery, charger } from 'power';
 import { today } from 'user-activity';
+import * as messaging from "messaging";
 
-// Update the clock every second
-clock.granularity = "seconds";
+// Update the clock every minute
+clock.granularity = "minutes";
 
 const currentTime = document.getElementById("currentTime");
 const heartRate = document.getElementById("heartRate");
+const background = document.getElementById("background");
+const textItems = document.getElementsByClassName("contentText");
 
 // Update the <text> element every tick with the current time
 clock.ontick = (evt) => {
@@ -30,8 +33,7 @@ clock.ontick = (evt) => {
     hours = util.zeroPad(hours);
   }
   let mins = util.zeroPad(today.getMinutes());
-  let secs = util.zeroPad(today.getSeconds());
-  currentTime.text = `${hours}:${mins}:${secs}`; 
+  currentTime.text = `${hours}:${mins}`;
 }
 
 if (HeartRateSensor) {
@@ -43,6 +45,19 @@ if (HeartRateSensor) {
    });
    hrm.start();
 }
+
+// Receive settings updates from companion and apply changes
+messaging.peerSocket.onmessage = (evt,today) => {
+  switch(evt.data.key) {
+  case "clockTextColor":
+    for (let item = 0; item < textItems.length; item++) {
+      textItems[item].style.fill = evt.data.value;
+    }
+    break;
+  default:
+    console.log(["Invalid settings option passed: " + evt.data.key]);
+  }
+};
 
 console.log(Math.floor(battery.chargeLevel) + "%");
 console.log("The charger " + (charger.connected ? "is" : "is not ") + " connected");
