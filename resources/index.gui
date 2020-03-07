@@ -1,4 +1,9 @@
 <svg id="background">
   <text class="contentText" id="currentTime" />
   <text class="contentText" id="heartRate" />
+  <text class="contentText" id="currentDate" />
+  <text class="contentText" id="currentDayOfWeek" />
+  <text class="contentText" id="batteryLevel" />
+  <image class="graphic" id="battery"/>
+  <text class="contentText" id="steps" />
 </svg>

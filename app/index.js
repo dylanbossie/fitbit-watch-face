@@ -6,18 +6,33 @@ import { HeartRateSensor } from "heart-rate";
 import { battery, charger } from 'power';
 import { today } from 'user-activity';
 import * as messaging from "messaging";
+import { display } from "display";
 
 // Update the clock every minute
-clock.granularity = "minutes";
+clock.granularity = "seconds";
 
 const currentTime = document.getElementById("currentTime");
 const heartRate = document.getElementById("heartRate");
 const background = document.getElementById("background");
 const textItems = document.getElementsByClassName("contentText");
+const currentDate = document.getElementById("currentDate");
+const currentDayOfWeek = document.getElementById("currentDayOfWeek");
+const batteryLevel = document.getElementById("batteryLevel");
+const steps = document.getElementById("steps");
+var batteryIcon = document.getElementById("battery");
+
+let dayOfWeekMap = new Map;
+dayOfWeekMap.set(0, "Sun");
+dayOfWeekMap.set(1, "Mon");
+dayOfWeekMap.set(2, "Tue");
+dayOfWeekMap.set(3, "Wed");
+dayOfWeekMap.set(4, "Thu");
+dayOfWeekMap.set(5, "Fri");
+dayOfWeekMap.set(6, "Sat");
 
 // Update the <text> element every tick with the current time
 clock.ontick = (evt) => {
-  // Get date and time information
+  // Get day and time information from tickEvent
   let today = evt.date;
   let dayOfWeek = today.getDay();
   let day = today.getDate();
@@ -34,14 +49,70 @@ clock.ontick = (evt) => {
   }
   let mins = util.zeroPad(today.getMinutes());
   currentTime.text = `${hours}:${mins}`;
+
+  // Format date information and display
+  currentDate.text = `${month+1}/${day}`;
+  currentDayOfWeek.text = `${dayOfWeekMap.get(dayOfWeek)}`;
 }
 
+// Update step count display
+function updateSteps() {
+  let stepCount = today.adjusted.steps;
+  steps.text = `${stepCount}`;
+}
+
+// Initialize step count display
+updateSteps();
+
+// Update step count whenever display turns on
+display.onchange = function() {
+  if (display.on) {
+    updateSteps();
+  }
+}
+
+// Get battery information and display
+battery.onchange = () => {
+  batteryLevel.text = `${battery.chargeLevel}%`;
+  // If watch is running on battery power
+  if (battery.charging == false) {
+    switch(true) {
+      case (battery.chargeLevel <= 20):
+        batteryIcon.href = "battery/battery-status-1.png";
+        break;
+      case (battery.chargeLevel > 20 && battery.chargeLevel <= 50):
+        batteryIcon.href = "battery/battery-status-2.png";
+        break;
+      case (battery.chargeLevel > 50 && battery.chargeLevel <= 80):
+        batteryIcon.href = "battery/battery-status-3.png";
+        break;
+      case (battery.chargeLevel > 80):
+        batteryIcon.href = "battery/battery-status-4.png";
+        break;
+      default:
+        batteryIcon.href = "battery/battery-status-charged.png";
+        break;
+    }
+  }
+  // Else if watch is charging
+  else {
+    switch(true) {
+      case (battery.chargeLevel < 95):
+        batteryIcon.href = "battery/battery-status-charging.png";
+        break;
+      case (battery.chargeLevel >= 95):
+        batteryIcon.href = "battery/battery-status-charged.png";
+        break;
+    }
+  }
+}
+
+// Get heart rate sensor information and display
 if (HeartRateSensor) {
    const hrm = new HeartRateSensor();
    hrm.addEventListener("reading", () => {
-     console.log(`Current heart rate: ${hrm.heartRate}`);
      let heart = hrm.heartRate;
-     heartRate.text = `${heart}`;
+     heartRate.text = `${heart}♥`;
    });
    hrm.start();
 }
@@ -58,8 +129,4 @@ messaging.peerSocket.onmessage = (evt,today) => {
     console.log(["Invalid settings option passed: " + evt.data.key]);
   }
 };
-
-console.log(Math.floor(battery.chargeLevel) + "%");
-console.log("The charger " + (charger.connected ? "is" : "is not ") + " connected");
-console.log(`${today.adjusted.steps} steps today`);
 
