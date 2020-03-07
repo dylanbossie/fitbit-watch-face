@@ -54,24 +54,38 @@ clock.ontick = (evt) => {
 }
 
 // Get battery information and display
-battery.onchange = (charger, evt) => {
+battery.onchange = () => {
   batteryLevel.text = `${battery.chargeLevel}%`;
-  switch(true) {
-    case (battery.chargeLevel <= 20):
-      batteryIcon.href = "battery/battery-status-1.png";
-      break;
-    case (battery.chargeLevel > 20 && battery.chargeLevel <= 50):
-      batteryIcon.href = "battery/battery-status-2.png";
-      break;
-    case (battery.chargeLevel > 50 && battery.chargeLevel <= 80):
-      batteryIcon.href = "battery/battery-status-3.png";
-      break;
-    case (battery.chargeLevel > 80):
-      batteryIcon.href = "battery/battery-status-4.png";
-      break;
-    default:
-      batteryIcon.href = "battery/battery-status-charged.png";
-      break;
+  // If watch is running on battery power
+  if (battery.charging == false) {
+    switch(true) {
+      case (battery.chargeLevel <= 20):
+        batteryIcon.href = "battery/battery-status-1.png";
+        break;
+      case (battery.chargeLevel > 20 && battery.chargeLevel <= 50):
+        batteryIcon.href = "battery/battery-status-2.png";
+        break;
+      case (battery.chargeLevel > 50 && battery.chargeLevel <= 80):
+        batteryIcon.href = "battery/battery-status-3.png";
+        break;
+      case (battery.chargeLevel > 80):
+        batteryIcon.href = "battery/battery-status-4.png";
+        break;
+      default:
+        batteryIcon.href = "battery/battery-status-charged.png";
+        break;
+    }
+  }
+  // Else if watch is charging
+  else {
+    switch(true) {
+      case (battery.chargeLevel < 95):
+        batteryIcon.href = "battery/battery-status-charging.png";
+        break;
+      case (battery.chargeLevel >= 95):
+        batteryIcon.href = "battery/battery-status-charged.png";
+        break;
+    }
   }
 }
 
