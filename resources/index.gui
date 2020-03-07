@@ -5,5 +5,5 @@
   <text class="contentText" id="currentDayOfWeek" />
   <text class="contentText" id="batteryLevel" />
   <text class="graphic" id="heart">♥</text>
-  <image class="graphic" id="battery" href="battery/battery-status-4.png"/>
+  <image class="graphic" id="battery"/>
 </svg>

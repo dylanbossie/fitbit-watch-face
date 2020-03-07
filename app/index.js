@@ -17,6 +17,7 @@ const textItems = document.getElementsByClassName("contentText");
 const currentDate = document.getElementById("currentDate");
 const currentDayOfWeek = document.getElementById("currentDayOfWeek");
 const batteryLevel = document.getElementById("batteryLevel");
+var batteryIcon = document.getElementById("battery");
 
 let dayOfWeekMap = new Map;
 dayOfWeekMap.set(0, "Sun");
@@ -50,9 +51,28 @@ clock.ontick = (evt) => {
   // Format date information and display
   currentDate.text = `${month+1}/${day}`;
   currentDayOfWeek.text = `${dayOfWeekMap.get(dayOfWeek)}`;
+}
 
-  // Format battery information and display
+// Get battery information and display
+battery.onchange = (charger, evt) => {
   batteryLevel.text = `${battery.chargeLevel}%`;
+  switch(true) {
+    case (battery.chargeLevel <= 20):
+      batteryIcon.href = "battery/battery-status-1.png";
+      break;
+    case (battery.chargeLevel > 20 && battery.chargeLevel <= 50):
+      batteryIcon.href = "battery/battery-status-2.png";
+      break;
+    case (battery.chargeLevel > 50 && battery.chargeLevel <= 80):
+      batteryIcon.href = "battery/battery-status-3.png";
+      break;
+    case (battery.chargeLevel > 80):
+      batteryIcon.href = "battery/battery-status-4.png";
+      break;
+    default:
+      batteryIcon.href = "battery/battery-status-charged.png";
+      break;
+  }
 }
 
 // Get heart rate sensor information and display
@@ -79,7 +99,6 @@ messaging.peerSocket.onmessage = (evt,today) => {
   }
 };
 
-console.log(Math.floor(battery.chargeLevel) + "%");
 console.log("The charger " + (charger.connected ? "is" : "is not ") + " connected");
 console.log(`${today.adjusted.steps} steps today`);
 
