@@ -5,4 +5,5 @@
   <text class="contentText" id="currentDayOfWeek" />
   <text class="contentText" id="batteryLevel" />
   <image class="graphic" id="battery"/>
+  <text class="contentText" id="steps" />
 </svg>

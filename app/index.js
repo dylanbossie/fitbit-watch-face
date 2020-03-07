@@ -6,6 +6,7 @@ import { HeartRateSensor } from "heart-rate";
 import { battery, charger } from 'power';
 import { today } from 'user-activity';
 import * as messaging from "messaging";
+import { display } from "display";
 
 // Update the clock every minute
 clock.granularity = "seconds";
@@ -17,6 +18,7 @@ const textItems = document.getElementsByClassName("contentText");
 const currentDate = document.getElementById("currentDate");
 const currentDayOfWeek = document.getElementById("currentDayOfWeek");
 const batteryLevel = document.getElementById("batteryLevel");
+const steps = document.getElementById("steps");
 var batteryIcon = document.getElementById("battery");
 
 let dayOfWeekMap = new Map;
@@ -51,6 +53,22 @@ clock.ontick = (evt) => {
   // Format date information and display
   currentDate.text = `${month+1}/${day}`;
   currentDayOfWeek.text = `${dayOfWeekMap.get(dayOfWeek)}`;
+}
+
+// Update step count display
+function updateSteps() {
+  let stepCount = today.adjusted.steps;
+  steps.text = `${stepCount}`;
+}
+
+// Initialize step count display
+updateSteps();
+
+// Update step count whenever display turns on
+display.onchange = function() {
+  if (display.on) {
+    updateSteps();
+  }
 }
 
 // Get battery information and display
@@ -111,6 +129,4 @@ messaging.peerSocket.onmessage = (evt,today) => {
     console.log(["Invalid settings option passed: " + evt.data.key]);
   }
 };
-
-console.log(`${today.adjusted.steps} steps today`);
 

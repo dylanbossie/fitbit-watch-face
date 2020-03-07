@@ -51,3 +51,10 @@
   width: 15%;
   height: 15%;
 }
+
+#steps {
+  text-anchor: end;
+  text-length: 6;
+  x: 98%;
+  y: 95%;
+}
