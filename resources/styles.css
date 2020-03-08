@@ -58,3 +58,23 @@
   x: 98%;
   y: 95%;
 }
+
+#mins {
+  fill: dimgray;
+}
+
+#hours {
+  fill: dimgray;
+}
+
+#secs {
+  fill: darkred;
+}
+
+#center {
+  fill: black;
+}
+
+#center-stroke {
+  fill: red;
+}

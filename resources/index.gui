@@ -1,9 +1,22 @@
-<svg id="background">
-  <text class="contentText" id="currentTime" />
+<svg id="background">  
+  <!-- Analog Clock Background -->
+  <g id="mins" pointer-events="visible" transform="translate(50%,50%)">
+    <rect x="$-4" y="-110" width="8" height="110" />
+  </g>
+  <g id="hours" pointer-events="visible" transform="translate(50%,50%)">
+    <rect x="$-6" y="-75" width="12" height="75" />
+  </g>
+  <g id="secs" pointer-events="visible" transform="translate(50%,50%)">
+    <rect x="$-2" y="-120" width="4" height="120" />
+  </g>
+  
+  <circle id="center-stroke" cx="50%" cy="50%" r="10" />
+  <circle id="center" cx="50%" cy="50%" r="9" />
   <text class="contentText" id="heartRate" />
   <text class="contentText" id="currentDate" />
   <text class="contentText" id="currentDayOfWeek" />
   <text class="contentText" id="batteryLevel" />
   <image class="graphic" id="battery"/>
   <text class="contentText" id="steps" />
+  <text class="contentText" id="currentTime" />
 </svg>
