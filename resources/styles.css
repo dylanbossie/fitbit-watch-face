@@ -5,7 +5,7 @@
 .contentText {
   fill: white;
   font-size: 50;
-  font-family: Fabrikat-Black;
+  font-family: System-Regular;
 }
 
 #currentTime {
@@ -76,5 +76,5 @@
 }
 
 #center-stroke {
-  fill: red;
+  fill: darkred;
 }

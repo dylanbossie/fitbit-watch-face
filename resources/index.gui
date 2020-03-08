@@ -10,7 +10,7 @@
     <rect x="$-2" y="-120" width="4" height="120" />
   </g>
   
-  <circle id="center-stroke" cx="50%" cy="50%" r="10" />
+  <circle id="center-stroke" cx="50%" cy="50%" r="11" />
   <circle id="center" cx="50%" cy="50%" r="9" />
   <text class="contentText" id="heartRate" />
   <text class="contentText" id="currentDate" />
