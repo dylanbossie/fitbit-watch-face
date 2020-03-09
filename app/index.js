@@ -100,7 +100,7 @@ function updateSteps() {
 }
 
 // Get battery information and display
-battery.onchange = () => {
+function updateBattery() {
   batteryLevel.text = `${battery.chargeLevel}%`;
   // If watch is running on battery power
   if (battery.charging == false) {
@@ -134,6 +134,13 @@ battery.onchange = () => {
     }
   }
 }
+
+battery.onchange = () => {
+  updateBattery();
+}
+
+// Initialize battery display
+updateBattery();
 
 // Get heart rate sensor information and display
 if (HeartRateSensor) {
