@@ -88,22 +88,15 @@ clock.ontick = (evt) => {
   currentDayOfWeek.text = `${dayOfWeekMap.get(dayOfWeek)}`;
 
   updateClockHands();
+
+  // Update step count
+  updateSteps();
 }
 
 // Update step count display
 function updateSteps() {
   let stepCount = today.adjusted.steps;
   steps.text = `${stepCount}`;
-}
-
-// Initialize step count display
-updateSteps();
-
-// Update step count whenever display turns on
-display.onchange = function() {
-  if (display.on) {
-    updateSteps();
-  }
 }
 
 // Get battery information and display
