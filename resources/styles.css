@@ -78,3 +78,18 @@
 #center-stroke {
   fill: darkred;
 }
+
+#minute-hand {
+  width: 10;
+  height: 110;
+}
+
+#hour-hand {
+  width: 14;
+  height: 75;
+}
+
+#second-hand {
+  width: 8;
+  height: 120;
+}
