@@ -102,8 +102,19 @@ function updateSteps() {
 // Get battery information and display
 function updateBattery() {
   batteryLevel.text = `${battery.chargeLevel}%`;
-  // If watch is running on battery power
-  if (battery.charging == false) {
+  if ( charger.connected ) {
+    switch(true) {
+      case (battery.chargeLevel < 95):
+        batteryIcon.href = "battery/battery-status-charging.png";
+        break;
+      case (battery.chargeLevel >= 95):
+        batteryIcon.href = "battery/battery-status-charged.png";
+        break;
+      default:
+        batteryIcon.href = "battery/battery-status-charging.png";
+    }
+  }
+  else if ( !charger.connected ) {
     switch(true) {
       case (battery.chargeLevel <= 20):
         batteryIcon.href = "battery/battery-status-1.png";
@@ -118,22 +129,11 @@ function updateBattery() {
         batteryIcon.href = "battery/battery-status-4.png";
         break;
       default:
-        batteryIcon.href = "battery/battery-status-charged.png";
+        batteryIcon.href = "battery/battery-status-4.png";
         break;
-    }
-  }
-  // Else if watch is charging
-  else {
-    switch(true) {
-      case (battery.chargeLevel < 95):
-        batteryIcon.href = "battery/battery-status-charging.png";
-        break;
-      case (battery.chargeLevel >= 95):
-        batteryIcon.href = "battery/battery-status-charged.png";
-        break;
-    }
-  }
-}
+    };
+  };
+};
 
 battery.onchange = () => {
   updateBattery();
