@@ -7,6 +7,7 @@ import { battery, charger } from 'power';
 import { today } from 'user-activity';
 import * as messaging from "messaging";
 import { display } from "display";
+import { BodyPresenceSensor } from "body-presence";
 
 // Update the clock every minute
 clock.granularity = "seconds";
@@ -144,12 +145,25 @@ updateBattery();
 
 // Get heart rate sensor information and display
 if (HeartRateSensor) {
-   const hrm = new HeartRateSensor();
-   hrm.addEventListener("reading", () => {
-     let heart = hrm.heartRate;
-     heartRate.text = `${heart}♥`;
-   });
-   hrm.start();
+  console.log("This device has a HeartRateSensor!");
+  const hrm = new HeartRateSensor();
+  hrm.addEventListener("reading", () => {
+    console.log(`Current heart rate: ${hrm.heartRate}`);
+  });
+  hrm.start();
+} else {
+  console.log("This device does NOT have a HeartRateSensor!");
+}
+
+if (BodyPresenceSensor) {
+  console.log("This device has a BodyPresenceSensor!");
+  const bodyPresence = new BodyPresenceSensor();
+  bodyPresence.addEventListener("reading", () => {
+    console.log(`The device is ${bodyPresence.present ? '' : 'not'} on the user's body.`);
+  });
+  bodyPresence.start();
+} else {
+  console.log("This device does NOT have a BodyPresenceSensor!");
 }
 
 // Receive settings updates from companion and apply changes
